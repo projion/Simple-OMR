@@ -1,0 +1,76 @@
+﻿@model CreateRoleViewModel
+@{
+    ViewData["Title"] = "Simple OMR | Registration Page";
+}
+@section headInfo{
+    <link href="~/lib/adminlte-3.1.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+}
+@*<h1>Create Role</h1>*@
+
+
+
+<div class="hold-transition register-page">
+    <div class="register-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="../../index2.html" class="h1">Simple <b>OMR</b></a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Create a new role</p>
+
+                <form method="post">
+                    @*<form action="../../index.html" method="post">*@
+
+                    @*Create role*@
+                    <div>
+                        <label asp-for="RoleName"></label>
+                        <div class="input-group mb-3">
+                            <input asp-for="RoleName" class="form-control" placeholder="Enter Role Name" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user-tag"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                @*//Nothing*@
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block" style="width:max-content;">Create Role</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+@*                <div class="social-auth-links text-center">
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Sign up using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Sign up using Google+
+                    </a>
+                </div>*@
+
+@*                <a href="login.html" class="text-center">I already have a membership</a>*@
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+ @*   <!-- /.register-box -->
+    <script src="~/lib/adminlte-3.1.0/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery -->
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/adminlte-3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/lib/adminlte-3.1.0/js/adminlte.min.js"></script>*@
+</div>
+

@@ -1,0 +1,296 @@
+*DemoBuffer
+49/10.11s
+Microsoft.EntityFrameworkCore.Tools
+builder.Services.AddScoped<IDemoBufferRepository, SQLDemoBufferRepository>();
+
+
+
+
+# repository pattern vs ssms procedure
+
+
+$$$$$ Image tag helper like token for detecting image change & using cache
+{
+        <img class="card-img-top" style="width:300px; height:300px;" src="~/media/noimage.svg.png" asp-append-version="true" 
+}
+
+$$$$$
+// In Model/(class)AppDbContext.cs :
+inherite model from DbContext
+install nuget pacakage > entityframeworkcore.sqlserver (automatically installs Microsoft.EntityFrameworkCore)
+<code>
+                    using Microsoft.EntityFrameworkCore;
+
+                    namespace Simple_OMR.Models
+                    {
+                        public class AppDbContext : DbContext
+                        {
+                            public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+                            {
+
+                            }
+                            public DbSet<DemoBufferModel> demoBufferModels { get; set; }
+                        }
+                    }
+</code>
+
+$$$$$
+// In appsettings.json : Added the below connection string
+<code>
+                    ,
+                      "ConnectionStrings": {
+                        "DBConnection": "Data Source=Avenger;Initial Catalog=Simple_OMR;Integrated Security=True;"
+                      }
+</code>
+
+$$$$$
+// In Program.cs: Added the database connection string as service
+<code>
+                    builder.Services.AddDbContextPool<AppDbContext>(options =>
+                                    {
+                                        options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection"));
+                                    });
+</code>
+
+$$$$$
+// In Model/(class)DemoBufferModel.cs :
+<code>
+                    namespace Simple_OMR.Models
+                    {
+                        public class DemoBufferModel
+                        {
+                            public int Id { get; set; }
+                            public string Name { get; set; }
+                            public string Description { get; set; }
+                            public string Email { get; set; }
+                        }
+                    }
+</code>
+
+$$$$$
+// In Model/(class)IDemoBufferRepository.cs :
+<code>
+                    namespace Simple_OMR.Models
+                    {
+                        public interface IDemoBufferRepository
+                        {
+                            DemoBufferModel GetPerson(int id);
+                            IEnumerable<DemoBufferModel> GetAll();
+                            DemoBufferModel Add(DemoBufferModel person);
+                            DemoBufferModel Delete(int id);
+                            DemoBufferModel Update(DemoBufferModel personInfoChanges);
+
+                        }
+                    }
+</code>
+
+$$$$$
+// In Model/(class)SQLDemoBufferRepository.cs :
+<code>
+                    namespace Simple_OMR.Models
+                    {
+                        public class SQLDemoBufferRepository : IDemoBufferRepository
+                        {
+                            private readonly AppDbContext context;
+
+                            public SQLDemoBufferRepository(AppDbContext context)
+                            {
+                                this.context = context;
+                            }
+
+                            public DemoBufferModel Add(DemoBufferModel person)
+                            {
+                                context.demoBufferModels.Add(person);
+                                context.SaveChanges();
+                                return person;
+                            }
+
+                            public DemoBufferModel Delete(int id)
+                            {
+                                DemoBufferModel person = context.demoBufferModels.Find(id);
+                                if(person != null)
+                                {
+                                    context.demoBufferModels.Remove(person);
+                                    context.SaveChanges();
+                                }
+                                return person;
+                            }
+
+                            public IEnumerable<DemoBufferModel> GetAll()
+                            {
+                                return context.demoBufferModels;
+                            }
+
+                            public DemoBufferModel GetPerson(int id)
+                            {
+                                return context.demoBufferModels.Find(id);
+                            }
+
+                            public DemoBufferModel Update(DemoBufferModel personInfoChanges)
+                            {
+                                var person = context.demoBufferModels.Attach(personInfoChanges);
+                                person.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                                context.SaveChanges();
+                                return personInfoChanges;
+                            }
+                        }
+                    }
+</code>
+
+$$$$$
+// In Program.cs: Added service of repository interface and repository
+                    builder.Services.AddScoped<IDemoBufferRepository, SQLDemoBufferRepository>();
+$$$$$
+// installed nuget package 
+                    Microsoft.EntityFrameworkCore.Tools
+$$$$$
+// In [view/other windows/Package manager console] installed :
+                    Add-Migration
+                    Name: InitialMigration
+                    Update-Database
+Thus database created successfully.
+For help:
+                    Get-Help about_entityframeworkcore
+Then inserted data manually from Microsoft SQL Server Management Studio.
+
+
+$$$$$
+// Created (controller) DemoBufferController.cs:
+<code>
+                    using Microsoft.AspNetCore.Http;
+                    using Microsoft.AspNetCore.Mvc;
+                    using Simple_OMR.Models;
+                    using Simple_OMR.ViewModels;
+
+                    namespace Simple_OMR.Controllers
+                    {
+                        public class DemoBufferController : Controller
+                        {
+                            private readonly IDemoBufferRepository demoBufferRepository;
+
+                            public DemoBufferController(IDemoBufferRepository demoBufferRepository)
+                            {
+                                this.demoBufferRepository = demoBufferRepository;
+                            }
+                            // GET: DemoBufferController/Details/5
+                            public ActionResult Details(int id)
+                            {
+                                DemoBufferDetailsViewModel demoBufferDetailsViewModel = new DemoBufferDetailsViewModel();
+                                {
+                                    demoBufferDetailsViewModel.demoBufferModel= demoBufferRepository.GetPerson(id);
+                                }
+                                return View(demoBufferDetailsViewModel);
+                            }
+                            public ActionResult DemoBuffer()
+                            {
+                                return View();
+                            }
+                        }
+                    }
+</code>
+$$$$$
+// Created ViewModels/DemoBufferDetailsViewModel.cs:
+<code>
+                    using Simple_OMR.Models;
+
+                    namespace Simple_OMR.ViewModels
+                    {
+                        public class DemoBufferDetailsViewModel
+                        {
+
+                            public DemoBufferModel demoBufferModel { get; set; }
+                        }
+                    }
+</code>
+$$$$$
+// Created Views/DemoBuffer/Details.cshtml:
+<code>
+                    @model Simple_OMR.ViewModels.DemoBufferDetailsViewModel
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta name="viewport" content="width=device-width" />
+                        <title>@ViewBag.Title</title>
+                    </head>
+                    <body>
+                        <div>
+                            @*@RenderBody()*@
+                        </div>
+                        <div>
+                            <p>@Model.demoBufferModel.Name</p>
+                            <p>@Model.demoBufferModel.Email</p>
+                            <img class="card-img-top" style="width:300px; height:300px;" src="~/media/noimage.svg.png" asp-append-version="true" />
+                        </div>
+                    </body>
+                    </html>
+</code>
+$$$$$
+// For getting All Person's List (List view):
+    STEP1:In IDemoBufferRepository.cs :
+                    IEnumerable<DemoBufferModel> All();
+    STEP2:In SQLDemoBufferRepository.cs :
+<code>
+                    namespace Simple_OMR.Models
+                    {
+                        public class SQLDemoBufferRepository : IDemoBufferRepository
+                        {
+                            private readonly AppDbContext context;
+
+                            public SQLDemoBufferRepository(AppDbContext context)
+                            {
+                                this.context = context;
+                            }
+
+                            public IEnumerable<DemoBufferModel> All()
+                            {
+                                return context.demoBufferModels.ToList();
+                            }
+                        }
+                    }
+</code>
+    STEP3:In DemoBufferController.cs added these :
+<code>
+                    public IActionResult Index()
+                    {
+                        var model = demoBufferRepository.All().ToList();
+                        return View(model);
+                    }
+</code>
+    STEP4:In Views\DemoBuffer\Index.cshtml added these :
+<code>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @employee.Id
+                                    </td>
+                                    <td>
+                                        @employee.Name
+                                    </td>
+                                    <td>
+                                        @employee.Description
+                                    </td>
+                                    <td>
+                                        @employee.Email
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+</code>
+
+
+
+
+<code>
+</code>

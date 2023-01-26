@@ -1,0 +1,120 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple OMR | Login Page</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="~/lib/adminlte-3.1.0/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- icheck bootstrap -->
+    <link href="~/lib/adminlte-3.1.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="~/lib/adminlte-3.1.0/css/adminlte.min.css" rel="stylesheet" />
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="../../index2.html" class="h1">Simple <b>OMR</b></a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Register a new membership</p>
+
+                <form method="post">
+                    @*Email*@
+                    <div>
+                        <label asp-for="Email "></label>
+                        <div class="input-group mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="Enter Email" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    @*Password*@
+                    <div>
+                        <label asp-for="Password "></label>
+                        <div class="input-group mb-3">
+                            <input asp-for="Password" class="form-control" placeholder="Enter Password" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    @*                    <div class="row">
+                    <div class="col-8">
+                    <div class="icheck-primary">
+                    <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                    <label for="agreeTerms">
+                    I agree to the <a href="#">terms</a>
+                    </label>
+                    </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </div>
+                    <!-- /.col -->
+                    </div>*@
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <div>
+                                    <input asp-for="RememberMe" type="checkbox" />
+                                    <label asp-for="RememberMe"></label>
+                                </div>
+                                @* <input type="checkbox" id="remember">
+                                <label for="remember">
+                                Remember Me
+                                </label>*@
+
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center">
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Sign up using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Sign up using Google+
+                    </a>
+                </div>
+
+                <a href="login.html" class="text-center">I already have a membership</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <script src="~/lib/adminlte-3.1.0/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery -->
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/adminlte-3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/lib/adminlte-3.1.0/js/adminlte.min.js"></script>
+</body>
+</html>
