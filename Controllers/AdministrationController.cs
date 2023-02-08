@@ -44,6 +44,11 @@ namespace Simple_OMR.Controllers
 
             return View(model);
         }
-
+        [HttpPost]
+        public IActionResult ListRoles() 
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
+        }
     }
 }
