@@ -66,6 +66,21 @@
                 <li clatem d-none d-sm-inline-block">
                     <a class="nav-link" asp-area="" asp-controller="DemoBuffer" asp-action="DemoBuffer">Demo Buffer</a>
                 </li>
+                @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-controller="Administration"
+                           asp-action="ListUsers">Users</a>
+                            <a class="dropdown-item" asp-controller="Administration"
+                           asp-action="ListRoles">Roles</a>
+                        </div>
+                    </li>
+                }
                 <li clatem d-none d-sm-inline-block">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </li>
@@ -222,7 +237,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <img src="~/media/eco-gc8597b44f_1280.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
             </a>
 
@@ -231,8 +246,9 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="~/media/black-2516434_1920.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
+
                     <div class="info">
                         <a href="#" class="d-block">Alexander Pierce</a>
                     </div>
@@ -316,6 +332,27 @@
             <div class="p-3">
                 <h5>Title</h5>
                 <p>Sidebar content</p>
+                <a href="https://localhost:7230/home/index">home/index</a>
+                <a href="https://localhost:7230/home/calendar">home/calendar</a>
+                <a href="https://localhost:7230/home/Privacy">home/Privacy</a>
+                <a href="https://localhost:7230/home/Error">home/Error</a>
+                <a href="https://localhost:7230/home/Error2">home/Error2</a>
+                <a href="https://localhost:7230/DemoBuffer/index">DemoBuffer/index</a>
+                <a href="https://localhost:7230/DemoBuffer/DemoBuffer">DemoBuffer/DemoBuffer</a>
+                <a href="https://localhost:7230/Account/register">Account/register</a>
+                <a href="https://localhost:7230/Account/Logout">Account/Logout</a>
+                <a href="https://localhost:7230//account/logout">/account/logout</a>
+                <a href="https://localhost:7230/Account/Login">Account/Login</a>
+                <a href="https://localhost:7230/administration/CreateRole">administration/CreateRole</a>
+                <a href="https://localhost:7230/administration/ListRoles">administration/ListRoles</a>
+                <a href="https://localhost:7230/administration/EditRole/31a5328b-8be0-4d52-9a0f-64e73c2b904b">administration/EditRole/ID</a>
+                <a href="https://localhost:7230/Administration/EditUsersInRole?roleid=31a5328b-8be0-4d52-9a0f-64e73c2b904b">Administration/EditUsersInRole/ID</a>
+                <a href="https://localhost:7230/administration/listusers">administration/listusers</a>
+                <a href="https://localhost:7230/administration/EditUser">administration/EditUser/ID</a>
+                <a href="https://localhost:7230/administration/DeleteUser">administration/DeleteUser/ID</a>
+                <a href="https://localhost:7230/administration/DeleteRole">administration/DeleteRole/ID</a>
+
+
             </div>
         </aside>
         <!-- /.control-sidebar -->

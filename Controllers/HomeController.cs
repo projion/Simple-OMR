@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Simple_OMR.Models;
 using System.Diagnostics;
 
@@ -17,6 +18,12 @@ namespace Simple_OMR.Controllers
         {
             return View();
         }
+        [Authorize(Roles ="Moderator")]
+        [Authorize(Policy = "DeleteRolePolicy")]
+        public IActionResult calendar()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
@@ -27,6 +34,13 @@ namespace Simple_OMR.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Error2()
+        {
+            return View();
+        }public IActionResult NotFound2()
+        {
+            return View();
         }
     }
 }

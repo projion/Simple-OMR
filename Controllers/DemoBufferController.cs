@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Simple_OMR.Models;
 using Simple_OMR.ViewModels;
 
 namespace Simple_OMR.Controllers
 {
+    [Authorize(Roles = "Admin, User, Moderator")]
     public class DemoBufferController : Controller
     {
         private readonly IDemoBufferRepository demoBufferRepository;

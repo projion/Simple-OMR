@@ -33,6 +33,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 //        options.Password.RequiredUniqueChars = 2;
 //        options.Password.RequireUppercase = false;
 //    });
+builder.Services.AddAuthorization(Options=>
+{
+    Options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role"));
+});
 
 var app = builder.Build();
 
